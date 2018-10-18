@@ -16,6 +16,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".GameSelectActivity" />
+        <activity android:name=".GameSetupActivity" />
+        <activity android:name=".EarGameActivity" />
+        <activity android:name=".ResultsScreenActivity"></activity>
     </application>
 
 </manifest>
