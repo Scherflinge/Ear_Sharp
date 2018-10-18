@@ -7,6 +7,7 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World! Test"
@@ -22,13 +23,5 @@
         android:text="Button"
         tools:layout_editor_absoluteX="148dp"
         tools:layout_editor_absoluteY="298dp" />
-
-    <ImageView
-        android:id="@+id/imageView"
-        android:layout_width="202dp"
-        android:layout_height="184dp"
-        app:srcCompat="@mipmap/Ear_Sharp_Logo"
-        tools:layout_editor_absoluteX="91dp"
-        tools:layout_editor_absoluteY="50dp" />
 
 </android.support.constraint.ConstraintLayout>
