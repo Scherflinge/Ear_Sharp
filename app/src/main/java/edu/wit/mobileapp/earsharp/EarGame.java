@@ -11,5 +11,5 @@ public class EarGame {
         chordList = incomingChords;
         currentState = GameStates.Started;
     }
-    
+
 }
