@@ -3,10 +3,12 @@
     <string name="game_select">Game Select</string>
     <string name="ear_game">Ear Game</string>
     <string name="start_game">Start Game</string>
+    <string name="game_setup">Game Setup</string>
     <string name="statistics">Statistics</string>
     <string name="manage_lessons">Manage Lessons</string>
     <string name="microphone_game">Microphone Game</string>
     <string name="back">Back</string>
     <string name="test">Hello World Test</string>
+    <string name="results">Results</string>
     <string name="logo_content">logo</string>
 </resources>
