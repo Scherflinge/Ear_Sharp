@@ -1,8 +1,15 @@
 package edu.wit.mobileapp.earsharp;
 
 public enum Note_Enum {
-    A1, A$1, B1, C1, C$1, D1, D$1, E1, F1, F$1, G1, G$1, A2, A$2, B2, C2, C$2, D2, D$2, E2, F2, F$2, G2, G$2;
-    public int getOrdinance(){
-        return this.ordinal();
+    A1("A"), A$1("Bb"), B1("B"), C1("C"), C$1("Db"), D1("D"), D$1("Eb"), E1("E"), F1("F"), F$1("Gb"), G1("G"), G$1("Ab"), A2("A"), A$2("Bb"), B2("B"), C2("C"), C$2("Db"), D2("D"), D$2("Eb"), E2("E"), F2("F"), F$2("Gb"), G2("G"), G$2("Ab");
+
+    String name;
+    private Note_Enum(String name){
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return name;
     }
 }
