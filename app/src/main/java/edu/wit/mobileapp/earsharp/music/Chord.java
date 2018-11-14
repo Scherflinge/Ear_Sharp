@@ -1,13 +1,12 @@
-package edu.wit.mobileapp.earsharp;
-
-import android.provider.ContactsContract;
+package edu.wit.mobileapp.earsharp.music;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class Chord {
-    Note_Enum root;
-    List<Extension> extensions;
+
+    private Note_Enum root;
+    private List<Extension> extensions;
 
     public Chord(Note_Enum incomingRoot, List<Extension> incomingExtensions){
         root = incomingRoot;
@@ -18,6 +17,22 @@ public class Chord {
         root = incomingRoot;
         extensions = new ArrayList<>();
         extensions.add(incomingExtension);
+    }
+
+    public Note_Enum getRoot() {
+        return root;
+    }
+
+    public void setRoot(Note_Enum root) {
+        this.root = root;
+    }
+
+    public List<Extension> getExtensions() {
+        return extensions;
+    }
+
+    public void setExtensions(List<Extension> extensions) {
+        this.extensions = extensions;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package edu.wit.mobileapp.earsharp;
+package edu.wit.mobileapp.earsharp.music;
 
 public enum Interval {
     I("I"), bII("bII"), II("II"), bIII("bIII"), III("III"), IV("IV"), bV("bV"), V("V"), bVI("bVI"), VI("VI"), bVII("bVII"), VII("VII");

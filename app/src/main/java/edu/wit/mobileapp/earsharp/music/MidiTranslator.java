@@ -1,6 +1,6 @@
-package edu.wit.mobileapp.earsharp;
+package edu.wit.mobileapp.earsharp.music;
 
-public class MidiTranslator implements MidiTranslator_Interface{
+public class MidiTranslator implements MidiTranslator_Interface {
     @Override
     public void playChord(Chord chord) {
 

@@ -1,26 +1,29 @@
-package edu.wit.mobileapp.earsharp;
+
+package edu.wit.mobileapp.earsharp.activities;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Button;
 
-public class EarGameActivity extends AppCompatActivity {
+import edu.wit.mobileapp.earsharp.R;
+
+public class GameSetupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_ear_game);
+        setContentView(R.layout.activity_game_setup);
 
         Bundle inBundle = this.getIntent().getExtras();
         // TODO Process bundle data
 
-        setTitle(getString(R.string.ear_game));
+        setTitle(getString(R.string.game_setup));
 
-        Button btnEarGame = (Button)findViewById(R.id.button_results);
+        Button btnEarGame = (Button)findViewById(R.id.button_startgame);
         btnEarGame.setOnClickListener((view) -> {
             Intent intent = new Intent();
-            intent.setClass(EarGameActivity.this, ResultsScreenActivity.class);
+            intent.setClass(GameSetupActivity.this, EarGameActivity.class);
 
             Bundle outBundle = new Bundle();
             // TODO Add Bundle Data Here
@@ -32,7 +35,7 @@ public class EarGameActivity extends AppCompatActivity {
         Button btnBack = (Button)findViewById(R.id.back_button);
         btnBack.setOnClickListener((view) -> {
             Intent intent = new Intent();
-            intent.setClass(EarGameActivity.this, GameSetupActivity.class);
+            intent.setClass(GameSetupActivity.this, GameSelectActivity.class);
 
             Bundle outBundle = new Bundle();
             // TODO Add Bundle Data Here

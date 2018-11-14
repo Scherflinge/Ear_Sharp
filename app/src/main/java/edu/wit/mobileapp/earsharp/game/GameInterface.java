@@ -1,4 +1,7 @@
-package edu.wit.mobileapp.earsharp;
+package edu.wit.mobileapp.earsharp.game;
+
+import edu.wit.mobileapp.earsharp.music.Interval;
+import edu.wit.mobileapp.earsharp.music.Note_Enum;
 
 public interface GameInterface {
     void playChord();

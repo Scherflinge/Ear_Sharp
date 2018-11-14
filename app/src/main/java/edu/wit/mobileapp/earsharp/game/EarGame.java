@@ -1,4 +1,4 @@
-package edu.wit.mobileapp.earsharp;
+package edu.wit.mobileapp.earsharp.game;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
@@ -6,16 +6,21 @@ import java.util.List;
 import java.util.Queue;
 import java.util.Random;
 
-import android.os.Bundle;
 import android.os.Handler;
 
-public class EarGame implements GameInterface{
+import edu.wit.mobileapp.earsharp.music.MidiTranslator;
+import edu.wit.mobileapp.earsharp.music.Chord;
+import edu.wit.mobileapp.earsharp.music.Extension;
+import edu.wit.mobileapp.earsharp.music.Interval;
+import edu.wit.mobileapp.earsharp.music.Note_Enum;
+
+public class EarGame implements GameInterface {
     private final Note_Enum allNotes[] = {Note_Enum.A1, Note_Enum.A$1, Note_Enum.B1, Note_Enum.C1, Note_Enum.C$1, Note_Enum.D1, Note_Enum.D$1, Note_Enum.E1, Note_Enum.F1, Note_Enum.F$1, Note_Enum.G1, Note_Enum.G$1, Note_Enum.A2, Note_Enum.A$2, Note_Enum.B2, Note_Enum.C2, Note_Enum.C$2, Note_Enum.D2, Note_Enum.D$2, Note_Enum.E2, Note_Enum.F2, Note_Enum.F$2, Note_Enum.G2, Note_Enum.G$2};
     private final int majorRoots[] = {0,2,4,5,7,9,11,12};
     private final Extension majorExtensions[] = {Extension.Maj, Extension.Min, Extension.Min, Extension.Maj, Extension.Maj, Extension.Min, Extension.Dim, Extension.Maj};
     private List<Chord> chordList;
     private Random random;
-    private DisplayInterface display;
+    private PlayNoteListener display;
     private Difficulty difficulty;
 
     private MidiTranslator midiPlayer;
@@ -136,7 +141,7 @@ public class EarGame implements GameInterface{
 
         int addition = interval.ordinal();
         int guess = key.ordinal()+addition;
-        if(chordToGuess.root.ordinal() == guess|| chordToGuess.root.ordinal()%12 == guess%12){
+        if(chordToGuess.getRoot().ordinal() == guess|| chordToGuess.getRoot().ordinal()%12 == guess%12){
             return true;
         }
         return false;
@@ -145,8 +150,8 @@ public class EarGame implements GameInterface{
     private enum GameStates{Started, NeedToPlayChord, ChordPlayed, ReplayChord, Finished}
     private GameStates currentState;
 
-    public EarGame(DisplayInterface displayInterface, List<Chord> lessons, Difficulty difficulty){
-        display = displayInterface;
+    public EarGame(PlayNoteListener playNoteListener, List<Chord> lessons, Difficulty difficulty){
+        display = playNoteListener;
         chordList = lessons;
         currentState = GameStates.Started;
         this.difficulty = difficulty;
@@ -171,9 +176,9 @@ public class EarGame implements GameInterface{
         recentlyGuessed.remove();
         recentlyGuessed.add(newChord);
 
-        Note_Enum newNote = transposeNote(Note_Enum.A1, key, newChord.root);
+        Note_Enum newNote = transposeNote(Note_Enum.A1, key, newChord.getRoot());
 
-        return new Chord(newNote, newChord.extensions);
+        return new Chord(newNote, newChord.getExtensions());
     }
 
     public Note_Enum transposeNote(Note_Enum previousKey, Note_Enum desiredKey, Note_Enum keyToChange){

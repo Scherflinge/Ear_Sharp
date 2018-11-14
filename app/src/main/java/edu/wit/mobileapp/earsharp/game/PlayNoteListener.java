@@ -1,8 +1,8 @@
-package edu.wit.mobileapp.earsharp;
+package edu.wit.mobileapp.earsharp.game;
 
 import java.util.List;
 
-public interface DisplayInterface {
+public interface PlayNoteListener {
     void highlightNotes(List<Integer> intervalList);
     void unhighlightNotes();
     void donePlayingNotes();

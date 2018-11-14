@@ -1,4 +1,4 @@
-package edu.wit.mobileapp.earsharp;
+package edu.wit.mobileapp.earsharp.music;
 
 import java.util.List;
 

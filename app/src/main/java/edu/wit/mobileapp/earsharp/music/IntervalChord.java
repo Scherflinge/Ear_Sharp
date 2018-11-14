@@ -1,4 +1,7 @@
-package edu.wit.mobileapp.earsharp;
+package edu.wit.mobileapp.earsharp.music;
+
+import edu.wit.mobileapp.earsharp.music.Extension;
+import edu.wit.mobileapp.earsharp.music.Interval;
 
 public class IntervalChord {
     public Interval root;
