@@ -6,82 +6,79 @@
     android:layout_height="match_parent"
     tools:context=".activities.EarGameActivity">
 
-    <Button
-        android:id="@+id/back_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:text="@string/back"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/layout_lights"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="64dp"
         android:gravity="center"
         android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/back_button">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
+            android:id="@+id/image_light_1"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/i_light" />
 
         <ImageView
+            android:id="@+id/image_light_2"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/ii_light" />
 
         <ImageView
+            android:id="@+id/image_light_3"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/iii_light" />
 
         <ImageView
+            android:id="@+id/image_light_4"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/iv_light" />
 
         <ImageView
+            android:id="@+id/image_light_5"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/v_light" />
 
         <ImageView
+            android:id="@+id/image_light_6"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/vi_light" />
 
         <ImageView
+            android:id="@+id/image_light_7"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/vii_light" />
 
         <ImageView
+            android:id="@+id/image_light_8"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@drawable/i_light" />
     </LinearLayout>
 
     <Spinner
-        android:id="@+id/spinner"
+        android:id="@+id/spinner_intervals"
         android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="128dp"
-        android:entries="@array/guesses_array"
         android:gravity="center_horizontal"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_lights" />
 
 
     <Button
-        android:id="@+id/button_results"
+        android:id="@+id/button_guess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="32dp"
@@ -89,6 +86,28 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner" />
+        app:layout_constraintTop_toBottomOf="@+id/spinner_intervals" />
+
+    <Button
+        android:id="@+id/button_replay"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/replay"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_lights" />
+
+    <Button
+        android:id="@+id/button_teststart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Test Start New Round"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/button_replay" />
 
 </android.support.constraint.ConstraintLayout>
