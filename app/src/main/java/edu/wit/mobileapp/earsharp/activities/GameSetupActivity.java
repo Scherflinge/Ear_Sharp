@@ -20,22 +20,10 @@ public class GameSetupActivity extends AppCompatActivity {
 
         setTitle(getString(R.string.game_setup));
 
-        Button btnEarGame = (Button)findViewById(R.id.button_startgame);
-        btnEarGame.setOnClickListener((view) -> {
+        Button btnStartGame = (Button)findViewById(R.id.button_startgame);
+        btnStartGame.setOnClickListener((view) -> {
             Intent intent = new Intent();
             intent.setClass(GameSetupActivity.this, EarGameActivity.class);
-
-            Bundle outBundle = new Bundle();
-            // TODO Add Bundle Data Here
-
-            intent.putExtras(outBundle);
-            startActivity(intent);
-        });
-
-        Button btnBack = (Button)findViewById(R.id.back_button);
-        btnBack.setOnClickListener((view) -> {
-            Intent intent = new Intent();
-            intent.setClass(GameSetupActivity.this, GameSelectActivity.class);
 
             Bundle outBundle = new Bundle();
             // TODO Add Bundle Data Here

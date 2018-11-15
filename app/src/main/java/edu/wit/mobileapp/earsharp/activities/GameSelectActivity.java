@@ -30,17 +30,5 @@ public class GameSelectActivity extends AppCompatActivity {
             intent.putExtras(outBundle);
             startActivity(intent);
         });
-
-        Button btnBack = (Button)findViewById(R.id.back_button);
-        btnBack.setOnClickListener((view) -> {
-            Intent intent = new Intent();
-            intent.setClass(GameSelectActivity.this, MainActivity.class);
-
-            Bundle outBundle = new Bundle();
-            // TODO Add Bundle Data Here
-
-            intent.putExtras(outBundle);
-            startActivity(intent);
-        });
     }
 }

@@ -18,17 +18,5 @@ public class ResultsScreenActivity extends AppCompatActivity {
         // TODO Process bundle data
 
         setTitle(getString(R.string.results));
-
-        Button btnBack = (Button)findViewById(R.id.back_button);
-        btnBack.setOnClickListener((view) -> {
-            Intent intent = new Intent();
-            intent.setClass(ResultsScreenActivity.this, EarGameActivity.class);
-
-            Bundle outBundle = new Bundle();
-            // TODO Add Bundle Data Here
-
-            intent.putExtras(outBundle);
-            startActivity(intent);
-        });
     }
 }
