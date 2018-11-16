@@ -8,6 +8,7 @@ import java.util.Random;
 
 import android.os.Handler;
 
+import edu.wit.mobileapp.earsharp.music.IntervalChord;
 import edu.wit.mobileapp.earsharp.music.MidiTranslator;
 import edu.wit.mobileapp.earsharp.music.Chord;
 import edu.wit.mobileapp.earsharp.music.Extension;
@@ -16,16 +17,14 @@ import edu.wit.mobileapp.earsharp.music.Note_Enum;
 
 public class EarGame implements GameInterface {
     private final Note_Enum allNotes[] = {Note_Enum.A1, Note_Enum.A$1, Note_Enum.B1, Note_Enum.C1, Note_Enum.C$1, Note_Enum.D1, Note_Enum.D$1, Note_Enum.E1, Note_Enum.F1, Note_Enum.F$1, Note_Enum.G1, Note_Enum.G$1, Note_Enum.A2, Note_Enum.A$2, Note_Enum.B2, Note_Enum.C2, Note_Enum.C$2, Note_Enum.D2, Note_Enum.D$2, Note_Enum.E2, Note_Enum.F2, Note_Enum.F$2, Note_Enum.G2, Note_Enum.G$2};
-    private final int majorRoots[] = {0,2,4,5,7,9,11,12};
-    private final Extension majorExtensions[] = {Extension.Maj, Extension.Min, Extension.Min, Extension.Maj, Extension.Maj, Extension.Min, Extension.Dim, Extension.Maj};
-    private List<Chord> chordList;
+    private List<IntervalChord> chordList;
     private Random random;
     private PlayNoteListener display;
     private Difficulty difficulty;
 
     private MidiTranslator midiPlayer;
 
-    private Queue<Chord> recentlyGuessed;
+    private Queue<IntervalChord> recentlyGuessed;
 
     private Chord chordToGuess;
 
@@ -35,16 +34,35 @@ public class EarGame implements GameInterface {
     private Note_Enum key;
     private Extension keyExtension;
     private boolean playRootFirst;
+    private int durationToPlay = 1000;
 
     private Handler handler = new Handler();
 
+    public EarGame(PlayNoteListener playNoteListener, List<IntervalChord> lessons, Difficulty difficulty){
+        display = playNoteListener;
+        chordList = lessons;
+        currentState = GameStates.Started;
+        this.difficulty = difficulty;
+        random = new Random();
+        recentlyGuessed = new ArrayDeque<>(chordList.size()>3? 3: chordList.size());
+        if(difficulty == Difficulty.Easy){
+            keyExtension = Extension.Maj;
+        }
+        else{
+            keyExtension = Extension.Maj;
+        }
+        midiPlayer = new MidiTranslator();
+    }
 
     @Override
     public void playChord(){
+        if(chordToGuess ==  null){
+            startNewRound();
+        }
         playChord(chordToGuess);
     }
-
     List<Integer> highlightFirst, highlightSecond;
+
     Chord playFirst, playSecond;
 
     public void playChord(Chord newChord) {
@@ -73,33 +91,25 @@ public class EarGame implements GameInterface {
         display.highlightNotes(highlightFirst);
         midiPlayer.playChord(playFirst);
 
-        //stop Highlighting Notes
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 display.unhighlightNotes();
                 midiPlayer.stopPlaying();
-            }
-        }, 250);
 
-        //Highlight notes
-        handler.postDelayed(new Runnable() {
-            @Override
-            public void run() {
                 display.highlightNotes(highlightSecond);
                 midiPlayer.playChord(playSecond);
             }
-        }, 250);
+        }, durationToPlay);
 
-        //stop Highlighting Notes
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
                 display.unhighlightNotes();
                 midiPlayer.stopPlaying();
+                display.donePlayingNotes();
             }
-        }, 500);
-        display.donePlayingNotes();
+        }, durationToPlay*2);
     }
 
     @Override
@@ -147,38 +157,25 @@ public class EarGame implements GameInterface {
         return false;
     }
 
-    private enum GameStates{Started, NeedToPlayChord, ChordPlayed, ReplayChord, Finished}
-    private GameStates currentState;
+    private enum GameStates{Started, NeedToPlayChord, ChordPlayed, ReplayChord, Finished;}
 
-    public EarGame(PlayNoteListener playNoteListener, List<Chord> lessons, Difficulty difficulty){
-        display = playNoteListener;
-        chordList = lessons;
-        currentState = GameStates.Started;
-        this.difficulty = difficulty;
-        random = new Random();
-        recentlyGuessed = new ArrayDeque<>(chordList.size()>3? 3: chordList.size());
-        handler = new Handler();
-        if(difficulty == Difficulty.Easy){
-            keyExtension = Extension.Maj;
-        }
-        midiPlayer = new MidiTranslator();
-    }
+    private GameStates currentState;
 
     private Chord newRandomChord(){
         int newRand = random.nextInt(chordList.size());
         while (recentlyGuessed.contains(chordList.get(newRand))){
             newRand = random.nextInt(chordList.size());
         }
-        Chord newChord = chordList.get(newRand);
+        IntervalChord newChord = chordList.get(newRand);
 
-        // We're going to assume everything is in A major
-
-        recentlyGuessed.remove();
+        if(!recentlyGuessed.isEmpty()){
+            recentlyGuessed.remove();
+        }
         recentlyGuessed.add(newChord);
 
-        Note_Enum newNote = transposeNote(Note_Enum.A1, key, newChord.getRoot());
+        Note_Enum newNote =  allNotes[newChord.root.ordinal()+key.ordinal()];
 
-        return new Chord(newNote, newChord.getExtensions());
+        return new Chord(newNote, newChord.extension);
     }
 
     public Note_Enum transposeNote(Note_Enum previousKey, Note_Enum desiredKey, Note_Enum keyToChange){

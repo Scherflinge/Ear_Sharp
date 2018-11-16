@@ -7,9 +7,9 @@ import java.util.List;
 
 public class MidiTranslator implements MidiTranslator_Interface {
     MidiDriverTranslator mc;
-    private int velocity = 127;
+    private int velocity = 63;
     List<Integer> playingNotes;
-    private int offset = 57;
+    private int offset = 57-12;
 
     public MidiTranslator(){
         playingNotes = new ArrayList<>();
@@ -26,7 +26,7 @@ public class MidiTranslator implements MidiTranslator_Interface {
 
         for(int i = 0; i< extensions.size(); i++) {
             for (int j = 0; j < extensions.get(i).notes.length; j++) {
-                int toPlay = root + extensions.get(i).notes[j] + offset;
+                int toPlay = root + extensions.get(i).notes[j];
                 mc.noteOn(toPlay, velocity);
                 playingNotes.add(toPlay);
             }
@@ -45,6 +45,7 @@ public class MidiTranslator implements MidiTranslator_Interface {
         for (Integer note: playingNotes) {
             mc.noteOff(note);
         }
+        playingNotes.clear();
     }
 
 

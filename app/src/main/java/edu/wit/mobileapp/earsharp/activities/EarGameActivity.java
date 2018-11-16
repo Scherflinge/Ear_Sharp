@@ -23,6 +23,7 @@ import edu.wit.mobileapp.earsharp.game.PlayNoteListener;
 import edu.wit.mobileapp.earsharp.music.Chord;
 import edu.wit.mobileapp.earsharp.music.Extension;
 import edu.wit.mobileapp.earsharp.music.Interval;
+import edu.wit.mobileapp.earsharp.music.IntervalChord;
 import edu.wit.mobileapp.earsharp.music.Note_Enum;
 
 public class EarGameActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
@@ -55,6 +56,14 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
     private List<Interval> testIntervals = Arrays.asList(Interval.I, Interval.II, Interval.III,
             Interval.IV, Interval.V, Interval.VI, Interval.VII);
 
+    private List<IntervalChord> testIntervalChords = Arrays.asList(
+            new IntervalChord(Interval.II, Extension.Min),
+            new IntervalChord(Interval.III, Extension.Min),
+            new IntervalChord(Interval.IV, Extension.Maj),
+            new IntervalChord(Interval.V, Extension.Maj),
+            new IntervalChord(Interval.VI, Extension.Min),
+            new IntervalChord(Interval.VII, Extension.Dim)
+            );
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,7 +74,7 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
 
         setTitle(getString(R.string.ear_game));
 
-        game = new EarGame(this, testLesson, Difficulty.Easy);
+        game = new EarGame(this, testIntervalChords, Difficulty.Easy);
 //        game.startNewRound();
 
         imageViews = new ArrayList<>();
