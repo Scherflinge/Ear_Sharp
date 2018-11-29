@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,10 +34,13 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
     private Button btnReplay;
     private Spinner spnInterval;
     private List<ImageView> imageViews;
-
+    private Button btnTestStart;
+    private Button btnGuess;
+    private ImageView correctImage;
     // Game
     private EarGame game;
-    private Interval selectedInterval;
+    private IntervalChord selectedInterval;
+    private TextView roundCounter;
     private List<Chord> testLesson = Arrays.asList(
             new Chord(Note_Enum.A1, Extension.None),
             new Chord(Note_Enum.B1, Extension.None),
@@ -77,6 +81,8 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
         game = new EarGame(this, testIntervalChords, Difficulty.Easy);
 //        game.startNewRound();
 
+        correctImage = findViewById(R.id.correct_image);
+        correctImage.setVisibility(View.INVISIBLE);
         imageViews = new ArrayList<>();
         imageViews.add((ImageView)findViewById(R.id.image_light_1));
         imageViews.add((ImageView)findViewById(R.id.image_light_2));
@@ -93,21 +99,37 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
             game.playChord();
         });
 
-        Button btnTestStart = (Button)findViewById(R.id.button_teststart);
+        btnTestStart = (Button)findViewById(R.id.button_teststart);
         btnTestStart.setOnClickListener((view) -> {
-            game.startNewRound();
+            startNewRound();
         });
 
+        roundCounter = findViewById(R.id.num_correct);
+        game.setMaxRounds(15);
+
+        roundCounter.setText(game.getCurrentRound()+"/"+game.getMaxRounds());
+
         spnInterval = (Spinner)findViewById(R.id.spinner_intervals);
-        ArrayAdapter<Interval> spinnerAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, testIntervals);
+
+        ArrayAdapter<IntervalChord> spinnerAdapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_item, testIntervalChords);
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+
         spnInterval.setAdapter(spinnerAdapter);
         spnInterval.setOnItemSelectedListener(this);
 
-        Button btnGuess = (Button)findViewById(R.id.button_guess);
+
+        btnGuess = (Button)findViewById(R.id.button_guess);
         btnGuess.setOnClickListener((view) -> {
-            game.checkInterval(selectedInterval);
+            boolean correct = game.checkInterval(selectedInterval);
+            endRound();
+            if(correct){
+                displayCorrect();
+            }
+            else{
+                displayFalse();
+            }
+
 
 //            Intent intent = new Intent();
 //            intent.setClass(EarGameActivity.this, ResultsScreenActivity.class);
@@ -117,6 +139,7 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
 //
 //            intent.putExtras(outBundle);
 //            startActivity(intent);
+
         });
     }
 
@@ -127,7 +150,7 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
-        selectedInterval = (Interval)parent.getItemAtPosition(pos);
+        selectedInterval = (IntervalChord)parent.getItemAtPosition(pos);
     }
 
     @Override
@@ -153,5 +176,30 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
     @Override
     public void donePlayingNotes() {
         btnReplay.setEnabled(true);
+    }
+
+    @Override
+    public void startNewRound() {
+        game.startNewRound();
+        correctImage.setVisibility(View.INVISIBLE);
+        btnGuess.setEnabled(true);
+        btnTestStart.setEnabled(false);
+        game.playChord();
+        roundCounter.setText(game.getCurrentRound()+"/"+game.getMaxRounds());
+    }
+
+    @Override
+    public void endRound() {
+        btnGuess.setEnabled(false);
+        btnTestStart.setEnabled(true);
+    }
+
+    private void displayFalse(){
+        correctImage.setImageResource(R.drawable.x);
+        correctImage.setVisibility(View.VISIBLE);
+    }
+    private void displayCorrect(){
+        correctImage.setImageResource(R.drawable.check);
+        correctImage.setVisibility(View.VISIBLE);
     }
 }

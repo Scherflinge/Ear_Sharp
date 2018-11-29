@@ -9,7 +9,7 @@ public class MidiTranslator implements MidiTranslator_Interface {
     MidiDriverTranslator mc;
     private int velocity = 63;
     List<Integer> playingNotes;
-    private int offset = 57-12;
+    private int offset = 57;
 
     public MidiTranslator(){
         playingNotes = new ArrayList<>();
@@ -18,7 +18,7 @@ public class MidiTranslator implements MidiTranslator_Interface {
 
     public void playChord(Chord chord) {
         List<Extension> extensions = chord.getExtensions();
-
+        Log.v("MidiTranslator", "playing chord "+chord.toString());
         int root = chord.getRoot().ordinal() + offset;
 
         mc.noteOn(root, velocity);

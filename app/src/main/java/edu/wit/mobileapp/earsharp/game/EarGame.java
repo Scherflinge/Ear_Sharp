@@ -7,6 +7,7 @@ import java.util.Queue;
 import java.util.Random;
 
 import android.os.Handler;
+import android.util.Log;
 
 import edu.wit.mobileapp.earsharp.music.IntervalChord;
 import edu.wit.mobileapp.earsharp.music.MidiTranslator;
@@ -29,7 +30,7 @@ public class EarGame implements GameInterface {
     private Chord chordToGuess;
 
     private int currentRound = 0;
-    private int maxRounds = 0;
+    public int maxRounds = 0;
     private int numCorrect = 0;
     private Note_Enum key;
     private Extension keyExtension;
@@ -68,15 +69,22 @@ public class EarGame implements GameInterface {
     public void playChord(Chord newChord) {
         //Highlight notes
         highlightFirst = new ArrayList<>();
-        highlightFirst.add(0);
+
 
         highlightSecond = new ArrayList<>();
-        for(int i  = 1; i < 8; i++){
+        for(int i  = 1; i < 7; i++){
             highlightSecond.add(i);
         }
 
         playFirst = new Chord(key, keyExtension);
         playSecond = newChord;
+
+        if(playFirst.getRoot().ordinal() < playSecond.getRoot().ordinal()){
+            highlightFirst.add(0);
+        }
+        else{
+            highlightFirst.add(7);
+        }
 
         if(!playRootFirst){
             List<Integer> tempList = highlightFirst;
@@ -147,14 +155,23 @@ public class EarGame implements GameInterface {
     }
 
     @Override
-    public boolean checkInterval(Interval interval) {
+    public boolean checkInterval(IntervalChord intervalC) {
+        Interval interval = intervalC.root;
+        if(intervalC.extension != chordToGuess.getExtensions()){
 
+        }
         int addition = interval.ordinal();
         int guess = key.ordinal()+addition;
         if(chordToGuess.getRoot().ordinal() == guess|| chordToGuess.getRoot().ordinal()%12 == guess%12){
             return true;
         }
+        Log.v("EarGame", interval.toString() + "was inputted, looking for " + chordToGuess.toString());
         return false;
+    }
+
+    @Override
+    public void setMaxRounds(int maxRounds) {
+        this.maxRounds = maxRounds;
     }
 
     private enum GameStates{Started, NeedToPlayChord, ChordPlayed, ReplayChord, Finished;}

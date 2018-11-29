@@ -69,33 +69,36 @@
     <Spinner
         android:id="@+id/spinner_intervals"
         android:layout_width="120dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
+        android:layout_height="60dp"
+        android:layout_marginTop="188dp"
+        android:layout_marginEnd="8dp"
         android:gravity="center_horizontal"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="@+id/button_guess"
+        app:layout_constraintEnd_toStartOf="@+id/button_guess"
+        app:layout_constraintHorizontal_bias="0.522"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/layout_lights" />
+        app:layout_constraintTop_toBottomOf="@+id/layout_lights"
+        app:layout_constraintVertical_bias="1.0" />
 
 
     <Button
         android:id="@+id/button_guess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="32dp"
+        android:layout_marginBottom="216dp"
         android:text="@string/submit_guess"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spinner_intervals" />
+        app:layout_constraintHorizontal_bias="0.835"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/button_replay"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="20dp"
         android:text="@string/replay"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/layout_lights" />
 
@@ -103,11 +106,29 @@
         android:id="@+id/button_teststart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="88dp"
         android:text="Test Start New Round"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.04"
+        app:layout_constraintHorizontal_bias="0.917"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button_replay" />
+        app:layout_constraintTop_toBottomOf="@+id/button_guess" />
+
+    <ImageView
+        android:id="@+id/correct_image"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        app:layout_constraintStart_toStartOf="@+id/spinner_intervals"
+        app:layout_constraintTop_toBottomOf="@+id/spinner_intervals"
+        app:srcCompat="@drawable/check" />
+
+    <TextView
+        android:id="@+id/num_correct"
+        android:layout_width="82dp"
+        android:layout_height="28dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:text="TextView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

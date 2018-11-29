@@ -6,4 +6,6 @@ public interface PlayNoteListener {
     void highlightNotes(List<Integer> intervalList);
     void unhighlightNotes();
     void donePlayingNotes();
+    void startNewRound();
+    void endRound();
 }

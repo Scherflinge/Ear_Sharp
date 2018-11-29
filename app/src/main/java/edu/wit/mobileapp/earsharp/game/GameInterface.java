@@ -1,6 +1,7 @@
 package edu.wit.mobileapp.earsharp.game;
 
 import edu.wit.mobileapp.earsharp.music.Interval;
+import edu.wit.mobileapp.earsharp.music.IntervalChord;
 import edu.wit.mobileapp.earsharp.music.Note_Enum;
 
 public interface GameInterface {
@@ -10,5 +11,6 @@ public interface GameInterface {
     int getMaxRounds();
     int getNumCorrect();
     void startNewRound();
-    boolean checkInterval(Interval interval);
+    boolean checkInterval(IntervalChord intervalC);
+    void setMaxRounds(int maxRounds);
 }
