@@ -4,4 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="colorHighlightNote">#8888FFFF</color>
+    <color name="cardview_lesson">#cccccc</color>
+    <color name="cardview_lesson_selected">#888888</color>
 </resources>

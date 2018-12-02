@@ -4,6 +4,8 @@ package edu.wit.mobileapp.earsharp.activities;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.Button;
 
 import java.util.List;
@@ -22,22 +24,30 @@ public class GameSetupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_game_setup);
 
-        lessonDAO = LessonDAOImpl.getInstance(getApplicationContext());
-
-        List<Lesson> lessons = lessonDAO.getAllLessons();
-
-        Bundle inBundle = this.getIntent().getExtras();
-        // TODO Process bundle data
-
         setTitle(getString(R.string.game_setup));
+
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.lesson_cards);
+        LinearLayoutManager llm = new LinearLayoutManager(this);
+        llm.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(llm);
+
+        lessonDAO = LessonDAOImpl.getInstance(getApplicationContext());
+        List<Lesson> lessons = lessonDAO.getAllLessons();
+        LessonAdapter adapter = new LessonAdapter(lessons);
+        recyclerView.setAdapter(adapter);
 
         Button btnStartGame = (Button)findViewById(R.id.button_startgame);
         btnStartGame.setOnClickListener((view) -> {
+            Lesson lesson = adapter.getSelectedLesson();
+            if (lesson == null) {
+                return;
+            }
+
             Intent intent = new Intent();
             intent.setClass(GameSetupActivity.this, EarGameActivity.class);
 
             Bundle outBundle = new Bundle();
-            // TODO Add Bundle Data Here
+            outBundle.putInt("lesson_id", lesson.getId());
 
             intent.putExtras(outBundle);
             startActivity(intent);

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -25,10 +26,15 @@ import edu.wit.mobileapp.earsharp.music.Chord;
 import edu.wit.mobileapp.earsharp.music.Extension;
 import edu.wit.mobileapp.earsharp.music.Interval;
 import edu.wit.mobileapp.earsharp.music.IntervalChord;
+import edu.wit.mobileapp.earsharp.music.Lesson;
+import edu.wit.mobileapp.earsharp.music.LessonDAO;
+import edu.wit.mobileapp.earsharp.music.LessonDAOImpl;
 import edu.wit.mobileapp.earsharp.music.Note_Enum;
 
 public class EarGameActivity extends AppCompatActivity implements AdapterView.OnItemSelectedListener,
         PlayNoteListener {
+
+    private LessonDAO lessonDAO;
 
     // Controls
     private Button btnReplay;
@@ -41,6 +47,7 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
     private EarGame game;
     private IntervalChord selectedInterval;
     private TextView roundCounter;
+    private Lesson lesson;
     private List<Chord> testLesson = Arrays.asList(
             new Chord(Note_Enum.A1, Extension.None),
             new Chord(Note_Enum.B1, Extension.None),
@@ -73,12 +80,21 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_ear_game);
 
-        Bundle inBundle = this.getIntent().getExtras();
-        // TODO Process bundle data
-
         setTitle(getString(R.string.ear_game));
 
-        game = new EarGame(this, testIntervalChords, Difficulty.Easy);
+        Bundle inBundle = this.getIntent().getExtras();
+        int lessonId = inBundle.getInt("lesson_id");
+
+        lessonDAO = LessonDAOImpl.getInstance(this);
+        lesson = lessonDAO.getLesson(lessonId);
+
+        if (lesson == null) {
+            Log.v("EarSharp", "Could not load lesson with id=" + lessonId);
+        } else {
+            Log.v("EarSharp", "Loaded lesson with id=" + lessonId);
+        }
+
+        game = new EarGame(this, lesson.getIntervalChords(), Difficulty.Easy);
 //        game.startNewRound();
 
         correctImage = findViewById(R.id.correct_image);
@@ -198,6 +214,7 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
         correctImage.setImageResource(R.drawable.x);
         correctImage.setVisibility(View.VISIBLE);
     }
+
     private void displayCorrect(){
         correctImage.setImageResource(R.drawable.check);
         correctImage.setVisibility(View.VISIBLE);
