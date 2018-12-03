@@ -26,8 +26,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/title"
-            android:layout_margin="8dp"
-            android:textSize="14sp" />
+            android:layout_marginStart="8dp"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:id="@+id/lesson_chords"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description"
+            android:paddingStart="30dp"
+            android:paddingEnd="30dp"
+            android:textStyle="bold"/>
 
     </RelativeLayout>
 

@@ -10,6 +10,7 @@ import android.widget.TextView;
 import java.util.List;
 
 import edu.wit.mobileapp.earsharp.R;
+import edu.wit.mobileapp.earsharp.music.IntervalChord;
 import edu.wit.mobileapp.earsharp.music.Lesson;
 
 public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonViewHolder> {
@@ -36,7 +37,16 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
         Lesson lesson = lessonList.get(i);
         viewHolder.lesson = lesson;
         viewHolder.vTitle.setText(lesson.getName());
-        viewHolder.vDescription.setText(lesson.getDescription());
+        viewHolder.vDescription.setText("Interval Chords:");
+
+        StringBuilder builder = new StringBuilder();
+        String delimiter = "";
+        for (IntervalChord intervalChord : lesson.getIntervalChords()) {
+            builder.append(delimiter);
+            builder.append(intervalChord.toString());
+            delimiter = "\n";
+        }
+        viewHolder.vIntervalChord.setText(builder.toString());
 
         View itemView = viewHolder.itemView;
         itemView.setBackgroundColor(itemView.getResources().getColor(
@@ -62,11 +72,13 @@ public class LessonAdapter extends RecyclerView.Adapter<LessonAdapter.LessonView
 
         TextView vTitle;
         TextView vDescription;
+        TextView vIntervalChord;
 
         public LessonViewHolder(@NonNull View v) {
             super(v);
             vTitle = (TextView)v.findViewById(R.id.title);
             vDescription = (TextView)v.findViewById(R.id.description);
+            vIntervalChord = (TextView)v.findViewById(R.id.lesson_chords);
             v.setOnClickListener(this);
         }
 
