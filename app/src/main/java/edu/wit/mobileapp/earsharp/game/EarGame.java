@@ -29,13 +29,17 @@ public class EarGame implements GameInterface {
 
     private Chord chordToGuess;
 
-    private int currentRound = 0;
+    private int currentRound = 1;
     public int maxRounds = 0;
     private int numCorrect = 0;
     private Note_Enum key;
     private Extension keyExtension;
     private boolean playRootFirst;
     private int durationToPlay = 1000;
+
+    private int currentChordIndex;
+    private int[] counterTotal;
+    private int[] counterRight;
 
     private Handler handler = new Handler();
 
@@ -53,6 +57,9 @@ public class EarGame implements GameInterface {
             keyExtension = Extension.Maj;
         }
         midiPlayer = new MidiTranslator();
+        counterTotal = new int[lessons.size()];
+        counterRight = new int[lessons.size()];
+
     }
 
     @Override
@@ -142,16 +149,21 @@ public class EarGame implements GameInterface {
 
     @Override
     public void startNewRound() {
-        if (key == null){
-            currentRound = 0;
+        if(maxRounds == currentRound){
+            end();
         }
         else{
-            currentRound++;
+            if (key == null){
+                currentRound = 1;
+            }
+            else{
+                currentRound++;
+            }
+            key = allNotes[random.nextInt(12)];
+            playRootFirst = random.nextBoolean();
+            chordToGuess = newRandomChord();
+            currentState = GameStates.Started;
         }
-        key = allNotes[random.nextInt(12)];
-        playRootFirst = random.nextBoolean();
-        chordToGuess = newRandomChord();
-        currentState = GameStates.Started;
     }
 
     @Override
@@ -163,6 +175,8 @@ public class EarGame implements GameInterface {
         int addition = interval.ordinal();
         int guess = key.ordinal()+addition;
         if(chordToGuess.getRoot().ordinal() == guess|| chordToGuess.getRoot().ordinal()%12 == guess%12){
+            counterRight[currentChordIndex]++;
+            numCorrect++;
             return true;
         }
         Log.v("EarGame", interval.toString() + "was inputted, looking for " + chordToGuess.toString());
@@ -185,6 +199,9 @@ public class EarGame implements GameInterface {
         }
         IntervalChord newChord = chordList.get(newRand);
 
+        currentChordIndex = newRand;
+        counterTotal[currentChordIndex]++;
+
         if(!recentlyGuessed.isEmpty()){
             recentlyGuessed.remove();
         }
@@ -200,4 +217,18 @@ public class EarGame implements GameInterface {
         newNote = newNote%12;
         return allNotes[newNote];
     }
+
+    private void end(){
+        display.end();
+    }
+
+    @Override
+    public String getComments(){
+        String toReturn = "";
+        for(int i = 0; i < counterRight.length; i++){
+            toReturn = toReturn + "The Interval " + chordList.get(i).toString() + " was correct "+counterRight[i] + " out of " + counterTotal[i]+" times\n";
+        }
+        return toReturn;
+    }
+
 }

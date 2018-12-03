@@ -95,7 +95,6 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
         }
 
         game = new EarGame(this, lesson.getIntervalChords(), Difficulty.Easy);
-//        game.startNewRound();
 
         correctImage = findViewById(R.id.correct_image);
         correctImage.setVisibility(View.INVISIBLE);
@@ -123,17 +122,18 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
         roundCounter = findViewById(R.id.num_correct);
         game.setMaxRounds(15);
 
-        roundCounter.setText(game.getCurrentRound()+"/"+game.getMaxRounds());
+        roundCounter.setText("Round "+game.getCurrentRound()+"/"+game.getMaxRounds());
 
         spnInterval = (Spinner)findViewById(R.id.spinner_intervals);
 
         ArrayAdapter<IntervalChord> spinnerAdapter = new ArrayAdapter<>(this,
-                android.R.layout.simple_spinner_item, testIntervalChords);
+                android.R.layout.simple_spinner_item, lesson.getIntervalChords());
         spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
         spnInterval.setAdapter(spinnerAdapter);
         spnInterval.setOnItemSelectedListener(this);
 
+        btnTestStart.setEnabled(false);
 
         btnGuess = (Button)findViewById(R.id.button_guess);
         btnGuess.setOnClickListener((view) -> {
@@ -157,6 +157,7 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
 //            startActivity(intent);
 
         });
+        game.startNewRound();
     }
 
     @Override
@@ -218,5 +219,17 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
     private void displayCorrect(){
         correctImage.setImageResource(R.drawable.check);
         correctImage.setVisibility(View.VISIBLE);
+    }
+
+    @Override
+    public void end(){
+        Bundle b = new Bundle();
+        Intent i = new Intent();
+        i.setClass(EarGameActivity.this, ResultsScreenActivity.class);
+        b.putString("results","You got " + game.getNumCorrect() + "/" + game.getMaxRounds() + " correct");
+        b.putString("comments", game.getComments());
+        i.putExtras(b);
+        startActivity(i);
+        finish();
     }
 }

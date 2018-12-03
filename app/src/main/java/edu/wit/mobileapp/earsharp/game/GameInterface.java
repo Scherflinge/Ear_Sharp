@@ -13,4 +13,5 @@ public interface GameInterface {
     void startNewRound();
     boolean checkInterval(IntervalChord intervalC);
     void setMaxRounds(int maxRounds);
+    String getComments();
 }

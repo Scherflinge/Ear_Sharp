@@ -8,4 +8,5 @@ public interface PlayNoteListener {
     void donePlayingNotes();
     void startNewRound();
     void endRound();
+    void end();
 }
