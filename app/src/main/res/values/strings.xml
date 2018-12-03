@@ -12,5 +12,6 @@
     <string name="submit_guess">Submit Guess</string>
     <string name="results">Results</string>
     <string name="logo_content">logo</string>
-    <string name="replay">Replay</string>
+    <string name="replay">Play Chord</string>
+    <string name="next_round">Next Round</string>
 </resources>

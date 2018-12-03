@@ -202,7 +202,7 @@ public class EarGameActivity extends AppCompatActivity implements AdapterView.On
         btnGuess.setEnabled(true);
         btnTestStart.setEnabled(false);
         game.playChord();
-        roundCounter.setText(game.getCurrentRound()+"/"+game.getMaxRounds());
+        roundCounter.setText("Round "+ game.getCurrentRound()+"/"+game.getMaxRounds());
     }
 
     @Override

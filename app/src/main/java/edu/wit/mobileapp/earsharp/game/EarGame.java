@@ -75,6 +75,9 @@ public class EarGame implements GameInterface {
 
     public void playChord(Chord newChord) {
         //Highlight notes
+        if(currentState == GameStates.Finished){
+            return;
+        }
         highlightFirst = new ArrayList<>();
 
 
@@ -150,6 +153,7 @@ public class EarGame implements GameInterface {
     @Override
     public void startNewRound() {
         if(maxRounds == currentRound){
+            currentState = GameStates.Finished;
             end();
         }
         else{
