@@ -20,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
         Button btnGameSelect = (Button)findViewById(R.id.button_gameselect);
         btnGameSelect.setOnClickListener((view) -> {
             Intent intent = new Intent();
-            intent.setClass(MainActivity.this, GameSelectActivity.class);
+            intent.setClass(MainActivity.this, GameSetupActivity.class);
 
             Bundle outBundle = new Bundle();
             // TODO Add Bundle Data Here
